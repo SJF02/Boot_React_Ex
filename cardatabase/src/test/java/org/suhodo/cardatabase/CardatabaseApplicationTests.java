@@ -11,6 +11,7 @@ import org.suhodo.cardatabase.domain.Owner;
 import org.suhodo.cardatabase.repository.CarRepository;
 import org.suhodo.cardatabase.repository.OwnerRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
@@ -119,5 +120,18 @@ class CardatabaseApplicationTests {
 				.owner(owner2)
 				.build();
 		carRepository.save(hyndaiCar);
+	}
+
+	@Transactional
+	@Test
+	public void TestSelectOwner(){
+		List<Owner> ownerList = ownerRepository.findAll();
+		ownerList.stream().forEach(owner -> log.info(owner));
+	}
+
+	@Test
+	public void TestSelectCar(){
+		List<Car> carList = carRepository.findAll();
+		carList.stream().forEach(car -> log.info(car));
 	}
 }
