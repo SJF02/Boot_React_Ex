@@ -27,13 +27,17 @@ import lombok.extern.log4j.Log4j2;
 @RequiredArgsConstructor
 public class SecurityConfig {
    
-    private final UserDetailsServiceImpl userDetailsService;
-
+    /* 아래 코드는 직접 인증에 필요한 AuthenticationManagerBuilder를 설정하는 역할이지만
+     * 현재는 직접 등록하지 않아도 됨.
+     */
     // 시큐리티 인증과정에 필요한 AuthenticationManagerBuilder 객체에
     // DB의 사용자 정보를 반환하는 역할을 하는 userDetailsService를 등록
     // 패스워드 암호화 시 BCryptPasswordEncoder를 사용하겠다.
+    /*
+    private final UserDetailsServiceImpl userDetailsService;
     private final AuthenticationManagerBuilder auth;
 
+    // 생성자 호출 이후에 자동 실행(초기화)
     @PostConstruct
     public void configureGlobal() throws Exception {
         log.info("configureGlobal................");
@@ -41,6 +45,7 @@ public class SecurityConfig {
         auth.userDetailsService(userDetailsService)
                 .passwordEncoder(new BCryptPasswordEncoder());
     }
+    */
 
     // BCrypt 해싱 알고리즘 객체(password -> hashcode로 변환)
     @Bean
