@@ -35,12 +35,11 @@ public class SecurityConfig {
     private final AuthenticationManagerBuilder auth;
 
     @PostConstruct
-    public AuthenticationManagerBuilder configureGlobal() throws Exception {
+    public void configureGlobal() throws Exception {
         log.info("configureGlobal................");
 
         auth.userDetailsService(userDetailsService)
                 .passwordEncoder(new BCryptPasswordEncoder());
-        return auth;
     }
 
     // BCrypt 해싱 알고리즘 객체(password -> hashcode로 변환)
