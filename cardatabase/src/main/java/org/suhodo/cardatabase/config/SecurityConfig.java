@@ -13,6 +13,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.suhodo.cardatabase.service.UserDetailsServiceImpl;
 
 import jakarta.annotation.PostConstruct;
@@ -30,6 +32,8 @@ import lombok.extern.log4j.Log4j2;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final AuthenticationFilter authenticationFilter;
    
     /* 아래 코드는 직접 인증에 필요한 AuthenticationManagerBuilder를 설정하는 역할이지만
      * 현재는 직접 등록하지 않아도 됨.
@@ -79,7 +83,9 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
                 .requestMatchers(HttpMethod.POST, "/login").permitAll()
-                .anyRequest().authenticated());
+                .anyRequest().authenticated())
+                .addFilterBefore(authenticationFilter, 
+                UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
