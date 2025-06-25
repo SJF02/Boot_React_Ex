@@ -74,12 +74,12 @@ public class SecurityConfig {
 
         log.info("filterChain.................");
 
-        http.csrf((csrf)->csrf.disable())
-            .sessionManagement((sessionManagement)->sessionManagement.
-                    sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests((authorizeHttpRequests)->authorizeHttpRequests
-                    .requestMatchers(HttpMethod.POST, "/login").permitAll().
-                    anyRequest().authenticated());
+        http.csrf((csrf) -> csrf.disable())
+            .sessionManagement((sessionManagement) -> sessionManagement
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
+                .requestMatchers(HttpMethod.POST, "/login").permitAll()
+                .anyRequest().authenticated());
 
         return http.build();
     }
