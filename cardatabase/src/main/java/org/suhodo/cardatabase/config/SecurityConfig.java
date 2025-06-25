@@ -9,12 +9,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.suhodo.cardatabase.service.UserDetailsServiceImpl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 /*
  * 스프링 시큐리티 설정
  * 아래 어노테이션을 설정하면 기본 웹 보호 구성을 해제
  * -> 우리가 직접 설정한다.
  */
+@Log4j2
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -22,10 +24,15 @@ public class SecurityConfig {
 
     private final UserDetailsServiceImpl userDetailsService;
 
-    // public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
-    //     auth.userDetailsService(userDetailsService)
-    //     .passwordEncoder(new BCryptPasswordEncoder());
-    // }
+    // 시큐리티 인증과정에 필요한 AuthenticationManagerBuilder 객체에
+    // DB의 사용자 정보를 반환하는 역할을 하는 userDetailsService를 등록
+    // 패스워드 암호화 시 BCryptPasswordEncoder를 사용하겠다.
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
+        log.info("configureGlobal................");
+        
+        auth.userDetailsService(userDetailsService)
+        .passwordEncoder(new BCryptPasswordEncoder());
+    }
 
     // BCrypt 해싱 알고리즘 객체(password -> hashcode로 변환)
     @Bean

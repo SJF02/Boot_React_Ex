@@ -12,7 +12,9 @@ import org.suhodo.cardatabase.domain.AppUser;
 import org.suhodo.cardatabase.repository.AppUserRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
+@Log4j2
 @Service
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService{
@@ -25,6 +27,8 @@ public class UserDetailsServiceImpl implements UserDetailsService{
     // 리턴한 객체는 인증과정에 참여하게 된다.
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        log.info("loadUserByUsername : " + username + " ................");
 
         Optional<AppUser> user = repository.findByUsername(username);
 
