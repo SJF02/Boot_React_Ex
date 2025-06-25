@@ -113,9 +113,9 @@ public class SecurityConfig {
 
         // 인증없이 모두 허용
         http.csrf(csrf -> csrf.disable())
-                .cors(withDefaults())
-                .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll());
+            .cors(cors -> cors.disable())
+            .authorizeHttpRequests(auth -> auth
+                .anyRequest().permitAll());
 
         return http.build();
     }
