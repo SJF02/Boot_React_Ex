@@ -66,8 +66,14 @@ public class SecurityConfig {
 
     // 스프링 시큐리티에서 어떤 경로는 보호/비보호 결정
     // 보안 적용/비적용 결정
+    /* CSRF는 Session을 사용하는데, 우리는 Ajax json STATELESS 통신이므로, Session관리가 없다.
+     불필요해서 disable*/
+     /* /login 주소 요청은 허용한다. */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+
+        log.info("filterChain.................");
+
         http.csrf((csrf)->csrf.disable())
             .sessionManagement((sessionManagement)->sessionManagement.
                     sessionCreationPolicy(SessionCreationPolicy.STATELESS))
