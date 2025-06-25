@@ -1,11 +1,9 @@
 package org.suhodo.cardatabase.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -15,11 +13,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.suhodo.cardatabase.filter.AuthenticationFilter;
-import org.suhodo.cardatabase.service.UserDetailsServiceImpl;
+import org.suhodo.cardatabase.service.AuthEntryPoint;
 
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import lombok.val;
 import lombok.extern.log4j.Log4j2;
 
 /*
@@ -34,6 +30,7 @@ import lombok.extern.log4j.Log4j2;
 public class SecurityConfig {
 
     private final AuthenticationFilter authenticationFilter;
+    private final AuthEntryPoint authEntryPoint;
    
     /* 아래 코드는 직접 인증에 필요한 AuthenticationManagerBuilder를 설정하는 역할이지만
      * 현재는 직접 등록하지 않아도 됨.
@@ -85,7 +82,9 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/login").permitAll()
                 .anyRequest().authenticated())
                 .addFilterBefore(authenticationFilter, 
-                UsernamePasswordAuthenticationFilter.class);
+                UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling((exceptionHandling)->exceptionHandling
+                .authenticationEntryPoint(authEntryPoint));
 
         return http.build();
     }
