@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { SERVER_URL } from "./constants";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid } from '@mui/x-data-grid';
 
 const CarList = () => {
   const [cars, setCars] = useState([]); // car목록을 서버로부터 가져와서 저장
