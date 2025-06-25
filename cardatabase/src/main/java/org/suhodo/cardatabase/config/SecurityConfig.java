@@ -22,10 +22,10 @@ public class SecurityConfig {
 
     private final UserDetailsServiceImpl userDetailsService;
 
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
-        auth.userDetailsService(userDetailsService)
-        .passwordEncoder(new BCryptPasswordEncoder());
-    }
+    // public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
+    //     auth.userDetailsService(userDetailsService)
+    //     .passwordEncoder(new BCryptPasswordEncoder());
+    // }
 
     // BCrypt 해싱 알고리즘 객체(password -> hashcode로 변환)
     @Bean

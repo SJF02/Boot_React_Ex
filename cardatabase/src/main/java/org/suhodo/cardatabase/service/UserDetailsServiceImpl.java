@@ -20,7 +20,9 @@ public class UserDetailsServiceImpl implements UserDetailsService{
     private final AppUserRepository repository;
 
     // 스프링 시큐리티 인증 과정에서 아래 함수가 반드시 호출된다.
-    // 아래에서 DB의 사용자 정보와 비교해서 인증 처리를 해야 한다.
+    // 아래에서 DB의 사용자 정보가 있는 지 확인해서 
+    // 인증정보를 UserBuilder 객체에 담아서 리턴한다.
+    // 리턴한 객체는 인증과정에 참여하게 된다.
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
