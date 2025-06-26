@@ -90,16 +90,24 @@ public class SecurityConfig {
         log.info("filterChain.................");
 
         http.csrf((csrf) -> csrf.disable())
-            .cors(withDefaults())
-            .sessionManagement((sessionManagement) -> sessionManagement
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                .requestMatchers(HttpMethod.POST, "/login").permitAll()
-                .anyRequest().authenticated())
-            .addFilterBefore(authenticationFilter,
-                UsernamePasswordAuthenticationFilter.class)
-            .exceptionHandling((exceptionHandling) -> exceptionHandling
-                .authenticationEntryPoint(authEntryPoint));
+                // .cors(withDefaults())
+                .cors(cors -> cors.configurationSource(request -> {
+                    CorsConfiguration config = new CorsConfiguration();
+                    config.setAllowedOrigins(List.of("http://localhost:3000")); // 리액트 앱 주소
+                    config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                    config.setAllowedHeaders(List.of("*"));
+                    config.setAllowCredentials(true);
+                    return config;
+                }))
+                .sessionManagement((sessionManagement) -> sessionManagement
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
+                        .requestMatchers(HttpMethod.POST, "/login").permitAll()
+                        .anyRequest().authenticated())
+                .addFilterBefore(authenticationFilter,
+                        UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling((exceptionHandling) -> exceptionHandling
+                        .authenticationEntryPoint(authEntryPoint));
 
         return http.build();
     }
@@ -108,22 +116,22 @@ public class SecurityConfig {
     // @Bean
     // public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-    //     log.info("filterChain.................");
+    // log.info("filterChain.................");
 
-    //     // 인증없이 모두 허용
-    //     http.csrf(csrf -> csrf.disable())
-    //             .cors(cors -> cors.configurationSource(request -> {
-    //                 CorsConfiguration config = new CorsConfiguration();
-    //                 config.setAllowedOrigins(List.of("http://localhost:3000")); // 리액트 앱 주소
-    //                 config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-    //                 config.setAllowedHeaders(List.of("*"));
-    //                 config.setAllowCredentials(true);
-    //                 return config;
-    //             }))
-    //             .authorizeHttpRequests(auth -> auth
-    //                     .anyRequest().permitAll());
+    // // 인증없이 모두 허용
+    // http.csrf(csrf -> csrf.disable())
+    // .cors(cors -> cors.configurationSource(request -> {
+    // CorsConfiguration config = new CorsConfiguration();
+    // config.setAllowedOrigins(List.of("http://localhost:3000")); // 리액트 앱 주소
+    // config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+    // config.setAllowedHeaders(List.of("*"));
+    // config.setAllowCredentials(true);
+    // return config;
+    // }))
+    // .authorizeHttpRequests(auth -> auth
+    // .anyRequest().permitAll());
 
-    //     return http.build();
+    // return http.build();
     // }
 
     /*
