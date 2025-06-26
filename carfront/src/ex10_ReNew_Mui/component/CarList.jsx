@@ -4,6 +4,8 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Snackbar, IconButton } from "@mui/material";
 import AddCar from "./AddCar";
 import EditCar from "./EditCar";
+
+// npm install @mui/icons-material 설치
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const CarList = () => {
