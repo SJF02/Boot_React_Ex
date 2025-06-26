@@ -4,8 +4,10 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  IconButton,
 } from "@mui/material";
 import { Button, TextField, Stack } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
 
 const EditCar = (props) => {
   const { data, updateCar } = props;
@@ -41,7 +43,9 @@ const EditCar = (props) => {
 
   return (
     <div>
-      <button onClick={handleClickOpen}>Edit Car</button>
+      <IconButton onClick={handleClickOpen}>
+        <EditIcon color="primary" />
+      </IconButton>
       <Dialog open={open} onClose={handleClickClose}>
         <DialogTitle>Edit Car</DialogTitle>
         <DialogContent>

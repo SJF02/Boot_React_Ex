@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { SERVER_URL } from "./constants";
 import { DataGrid } from "@mui/x-data-grid";
-import { Snackbar } from "@mui/material";
+import { Snackbar, IconButton } from "@mui/material";
 import AddCar from "./AddCar";
 import EditCar from "./EditCar";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const CarList = () => {
   const [cars, setCars] = useState([]); // car목록을 서버로부터 가져와서 저장
@@ -96,7 +97,11 @@ const CarList = () => {
       filterable: false,
       renderCell: (row) => {
         // row.id === getRowId={(row) => row._links.self.href}
-        return <button onClick={() => onDelClick(row.id)}>Delete</button>;
+        return (
+        <IconButton onClick={() => onDelClick(row.id)}>
+          <DeleteIcon color="error" />
+        </IconButton>
+        );
       },
     },
   ];

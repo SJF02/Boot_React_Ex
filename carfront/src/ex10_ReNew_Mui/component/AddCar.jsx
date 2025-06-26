@@ -30,7 +30,9 @@ const AddCar = (props)=>{
 
     return (
         <div>
-            <button onClick={handleClickOpen}>New Car</button>
+            <Button variant="contained" onClick={handleClickOpen}>
+                New Car
+            </Button>
             <Dialog open={open} onClose={handleClickClose}>
                 <DialogTitle>New Car</DialogTitle>
                 <DialogContent>
