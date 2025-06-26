@@ -90,10 +90,11 @@ public class SecurityConfig {
         log.info("filterChain.................");
 
         http.csrf((csrf) -> csrf.disable())
+                .cors(withDefaults())
                 // .cors(withDefaults())
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedOrigins(List.of("*")); // 모든 클라이언트 허용
+                    config.setAllowedOrigins(List.of("http://localhost:3000")); // 이 주소의 클라이언트 허용
                     config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                     config.setAllowedHeaders(List.of("*"));
                     config.setAllowCredentials(true);
@@ -157,7 +158,7 @@ public class SecurityConfig {
         config.setAllowedOrigins(Arrays.asList("*"));
         config.setAllowedMethods(Arrays.asList("*"));
         config.setAllowedHeaders(Arrays.asList("*"));
-        config.setAllowCredentials(false);
+        config.setAllowCredentials(true);
         config.applyPermitDefaultValues();
 
         source.registerCorsConfiguration("/**", config);
