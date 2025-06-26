@@ -20,16 +20,22 @@ const CarList = (props) => {
   }, []);
 
   const fetchCars = () => {
-    fetch(SERVER_URL + "api/cars") // get 요청
+    const token = sessionStorage.getItem("jwt");
+
+    fetch(SERVER_URL + "api/cars", {
+      headers: {"Authorization" : token}
+    }) // get 요청
       .then((resp) => resp.json()) // 수신데이터 json 추출
       .then((data) => setCars(data._embedded.cars)) // json에서 cars 추출
       .catch((e) => console.log(e)); // 통신 오류 시 예외 출력
   };
 
   const fetchAddCar = (car)=>{
+    const token = sessionStorage.getItem("jwt");
+
     fetch(SERVER_URL + "api/cars", {
       method : "POST",
-      headers : {"Content-Type":"application/json"},
+      headers : {"Content-Type":"application/json", "Authorization" : token},
       body: JSON.stringify(car)   // js객체 -> json문자열
     })
     .then((resp)=>{
@@ -48,9 +54,11 @@ const CarList = (props) => {
    * PATH : 특정 항목 수정
    */
   const fetchUpdateCar = (car, link) => {
+    const token = sessionStorage.getItem("jwt");
+
     fetch(link, {
       method: "PUT",
-      headers: {"Content-Type" : "application/json"},
+      headers: {"Content-Type" : "application/json", "Authorization" : token},
       body: JSON.stringify(car)
     })
     .then((resp)=>{
@@ -65,7 +73,9 @@ const CarList = (props) => {
   // 삭제 요청이 정상 처리되었다면, 서버로 다시 Car 리스트 요청
   const onDelClick = (url) => {
     if (window.confirm("Are you sure to delete?")) {
-      fetch(url, { method: "DELETE" })
+      const token = sessionStorage.getItem("jwt");
+
+      fetch(url, { method: "DELETE", headers: { "Authorization": token } })
         .then((resp) => {
           if (resp.ok) {
             fetchCars(); // 자동차 목록 다시 요청
