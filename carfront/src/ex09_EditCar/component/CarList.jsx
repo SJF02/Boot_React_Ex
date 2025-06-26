@@ -38,8 +38,23 @@ const CarList = () => {
 
   // car 자동차 객체
   // link 전송할 주소
+  /**
+   * PUT : 전체 항목 수정
+   * PATH : 특정 항목 수정
+   */
   const fetchUpdateCar = (car, link) => {
-
+    fetch(link, {
+      method: "PUT",
+      headers: {"Content-Type" : "application/json"},
+      body: JSON.stringify(car)
+    })
+    .then((resp)=>{
+      if(resp.ok)
+        fetchCars();
+      else
+        alert("Something went wrong");
+    })
+    .catch((e)=>console.error(e));
   }
 
   // 삭제 요청이 정상 처리되었다면, 서버로 다시 Car 리스트 요청
