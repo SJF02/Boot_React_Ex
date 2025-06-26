@@ -46,53 +46,60 @@ const EditCar = (props) => {
         <DialogTitle>Edit Car</DialogTitle>
         <DialogContent>
           <Stack spacing={2} mt={1}>
-            <input
-              placeholder="Brand"
+            <TextField
+              label="Brand"
               name="brand"
               value={car.brand}
               onChange={handleChange}
+              variant="standard"
+              autoFocus
             />
             <br />
-            <input
-              placeholder="Model"
+            <TextField
+              label="Model"
               name="model"
               value={car.model}
               onChange={handleChange}
+              variant="standard"
             />
             <br />
-            <input
-              placeholder="Color"
+            <TextField
+              label="Color"
               name="color"
               value={car.color}
               onChange={handleChange}
+              variant="standard"
             />
             <br />
-            <input
-              placeholder="RegNum"
+            <TextField
+              label="RegNum"
               name="registrationNumber"
               value={car.registrationNumber}
               onChange={handleChange}
+              variant="standard"
             />
             <br />
-            <input
-              placeholder="ModelYear"
+            <TextField
+              label="ModelYear"
               name="modelYear"
               value={car.modelYear}
               onChange={handleChange}
+              variant="standard"
             />
             <br />
-            <input
-              placeholder="Price"
+            <TextField
+              label="Price"
               name="price"
               value={car.price}
               onChange={handleChange}
+              variant="standard"
             />
             <br />
           </Stack>
         </DialogContent>
         <DialogActions>
-          <button onClick={handleClickClose}>Cancel</button>
-          <button onClick={handleSave}>Save</button>
+          <Button onClick={handleClickClose}>Cancel</Button>
+          <Button onClick={handleSave}>Save</Button>
         </DialogActions>
       </Dialog>
     </div>
