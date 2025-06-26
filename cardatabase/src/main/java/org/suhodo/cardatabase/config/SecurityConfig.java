@@ -93,7 +93,7 @@ public class SecurityConfig {
                 // .cors(withDefaults())
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedOrigins(List.of("http://localhost:3000")); // 리액트 앱 주소
+                    config.setAllowedOrigins(List.of("*")); // 모든 클라이언트 허용
                     config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                     config.setAllowedHeaders(List.of("*"));
                     config.setAllowCredentials(true);
